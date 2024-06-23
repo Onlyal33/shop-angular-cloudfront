@@ -51,3 +51,8 @@ Most likely you are getting a message
 > husky - commit-msg script failed (code 1)
 
 To fix it you either need to follow conventional commit messages rules, or remove `.husky/pre-commit` file which enables the aforementioned rule.
+
+## Links
+
+CloudFront: https://d24t5blrjw5dy2.cloudfront.net
+S3 Bucket: http://shop-angular-cloudfront-50342115.s3-website-us-east-1.amazonaws.com/
