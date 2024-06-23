@@ -13,7 +13,9 @@ export class ManageProductsService extends ApiService {
       return EMPTY;
     }
 
-    return this.getPreSignedUrl(file.name).pipe(
+    const authorizationToken = localStorage.getItem('authorization_token');
+
+    return this.getPreSignedUrl(file.name, authorizationToken).pipe(
       switchMap((url) =>
         this.http.put(url, file, {
           headers: {
@@ -25,13 +27,24 @@ export class ManageProductsService extends ApiService {
     );
   }
 
-  private getPreSignedUrl(fileName: string): Observable<string> {
+  private getPreSignedUrl(
+    fileName: string,
+    authorizationToken: string | null,
+  ): Observable<string> {
     const url = this.getUrl('import', 'import');
-
-    return this.http.get<string>(url, {
+    const options = {
       params: {
         name: fileName,
       },
-    });
+      headers: {},
+    };
+
+    if (authorizationToken) {
+      options.headers = {
+        Authorization: `Basic ${authorizationToken}`,
+      };
+    }
+
+    return this.http.get<string>(url, options);
   }
 }
